@@ -45,13 +45,15 @@ const loginUser = async (req, res) => {
             return res.status(403).json({ message: "Account is inactive. Contact admin." });
         }
 
-        res.json({
+        res.status(201).json({
             _id: user.id,
             name: user.name,
             email: user.email,
             role: user.role,
             isActive: user.isActive,
             token: generateToken(user.id),
+            success:true,
+            message:"login successfully"
         });
     } catch (error) {
         res.status(500).json({ message: "Server error" });
@@ -105,5 +107,26 @@ const deleteUser = async (req, res) => {
         res.status(500).json({ message: "Server error" });
     }
 };
+const logoutUser = async (req, res) => {
+    try {
+        // If you store JWT in cookies:
+        res.clearCookie("token", {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production",
+            sameSite: "strict",
+        });
 
-module.exports = { registerUser, loginUser, deleteUser, getAllUsers, updateUser };
+        res.status(200).json({
+            success: true,
+            message: "Logged out successfully",
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: "Server error while logging out",
+        });
+    }
+};
+
+
+module.exports = { registerUser, loginUser, deleteUser, getAllUsers, updateUser,logoutUser };
