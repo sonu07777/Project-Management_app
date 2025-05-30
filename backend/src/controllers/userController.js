@@ -24,6 +24,8 @@ const registerUser = async (req, res) => {
             role: user.role,
             isActive: user.isActive,
             token: generateToken(user.id),
+            success:true,
+            message:"user register successfully"
         });
     } catch (error) {
         res.status(500).json({ message: "Server error" });
