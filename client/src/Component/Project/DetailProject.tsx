@@ -1,14 +1,31 @@
-import React from "react";
+import React, { useState } from "react";
 import { FiEdit2, FiTrash2, FiPlus } from "react-icons/fi";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Layout from "../../../Layout/Layout.tsx";
+import EditProjectModal from "../../Pages/User/EditProjectPage.tsx";
+import { deleteProject } from "../../Redux/Slice/projectSlice.ts";
+import { useDispatch } from "react-redux";
+import type { AppDispatch } from "../../Redux/store.ts";
 
 const ProjectDetailPage: React.FC = () => {
+  const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
+  const [show, setShow] = useState(false);
   const { state } = useLocation();
-  console.log(state);
+  // console.log(state);
   const project = state?.assignedUsers;
+  const handleDelete = async () => {
+    try {
+      const res = await dispatch(deleteProject(state._id));
+      console.log(res); 
+      if (res) {
+        navigate("/project");
+      }
+    } catch {
+      console.error("Failed to delete project.");
+    }
+  };
 
-  
   return (
     <Layout>
       <div className="p-6 md:p-10 bg-gray-50 min-h-screen space-y-6">
@@ -19,8 +36,16 @@ const ProjectDetailPage: React.FC = () => {
               {state.title}
             </h2>
             <div className="flex items-center gap-4 text-gray-500">
-              <FiEdit2 className="hover:text-blue-600 cursor-pointer" />
-              <FiTrash2 className="hover:text-red-600 cursor-pointer" />
+              <FiEdit2
+                onClick={() => setShow(true)}
+                className="hover:text-blue-600 cursor-pointer"
+                role="button"
+                tabIndex={0}
+              />
+
+              <FiTrash2
+              onClick={handleDelete } 
+              className="hover:text-red-600 cursor-pointer" />
             </div>
           </div>
 
@@ -53,7 +78,10 @@ const ProjectDetailPage: React.FC = () => {
                 </span>
               </p>
               <p className="text-sm text-gray-600">
-                End Date: <span className="font-medium">{ new Date(state.endDate).toISOString().split("T")[0]}</span>
+                End Date:{" "}
+                <span className="font-medium">
+                  {new Date(state.endDate).toISOString().split("T")[0]}
+                </span>
               </p>
             </div>
 
@@ -75,6 +103,15 @@ const ProjectDetailPage: React.FC = () => {
             </div>
           </div>
         </div>
+        {show && (
+          // <div>
+          //   {/* Your content here */}
+          //   <p>This will only show when `show` is true</p>
+          // </div>
+          <div className="fixed inset-0 flex items-center justify-center z-30 p-4">
+            <EditProjectModal state={state} setShow={setShow} />
+          </div>
+        )}
 
         {/* Task List Section */}
         {/* <div className="bg-white shadow-md rounded-lg p-6">

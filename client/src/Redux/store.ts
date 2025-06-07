@@ -1,6 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import Authslice from "./Slice/authslice.ts";
 import ProjectSlice from "./Slice/projectSlice.ts";
+import User from "./Slice/user.ts"
 
 // Import your reducers here
 // import rootReducer from './reducers';
@@ -11,6 +12,7 @@ const store = configureStore({
     // example: user: userReducer,
     auth: Authslice,
     project: ProjectSlice,
+    user:User
   },
 });
 

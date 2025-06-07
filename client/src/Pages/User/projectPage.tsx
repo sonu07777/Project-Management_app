@@ -159,7 +159,7 @@ const Project: React.FC = () => {
           </div> */}
           {allProject &&
             Array.isArray(allProject) &&
-            allProject.map((el) => <ProjectCard data={el} />)}
+            allProject.map((el,idx) => <ProjectCard data={el} key={idx} />)}
         </div>
       </div>
     </Layout>

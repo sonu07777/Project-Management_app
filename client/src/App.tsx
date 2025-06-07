@@ -11,6 +11,7 @@ import About from "./Pages/AboutUs.tsx";
 import Projectpage from "./Pages/User/projectPage.tsx";
 import RequireAuth from "./Component/Auth/AuthRequired.tsx";
 import DetailProject from "./Component/Project/DetailProject.tsx";
+import EditProjectModal from "./Pages/User/EditProjectPage.tsx";
 
 function App() {
   // const [count, setCount] = useState(0)
@@ -31,6 +32,7 @@ function App() {
           }>
           <Route path="/project" element={<Projectpage />}></Route>
           <Route path="/Description" element={<DetailProject />}></Route>
+          <Route path="/EditProject" element={<EditProjectModal />}></Route>
         </Route>
       </Routes>
     </>
