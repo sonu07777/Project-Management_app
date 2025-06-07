@@ -4,20 +4,21 @@ import { useLocation, useNavigate } from "react-router-dom";
 import Layout from "../../../Layout/Layout.tsx";
 import EditProjectModal from "../../Pages/User/EditProjectPage.tsx";
 import { deleteProject } from "../../Redux/Slice/projectSlice.ts";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch } from "../../Redux/store.ts";
 
 const ProjectDetailPage: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
+  const { role } = useSelector((state) => state?.auth);
   const [show, setShow] = useState(false);
   const { state } = useLocation();
-  // console.log(state);
+  console.log(state);
   const project = state?.assignedUsers;
   const handleDelete = async () => {
     try {
       const res = await dispatch(deleteProject(state._id));
-      console.log(res); 
+      console.log(res);
       if (res) {
         navigate("/project");
       }
@@ -36,16 +37,30 @@ const ProjectDetailPage: React.FC = () => {
               {state.title}
             </h2>
             <div className="flex items-center gap-4 text-gray-500">
-              <FiEdit2
+              {/* <FiEdit2
                 onClick={() => setShow(true)}
                 className="hover:text-blue-600 cursor-pointer"
                 role="button"
                 tabIndex={0}
               />
-
               <FiTrash2
-              onClick={handleDelete } 
-              className="hover:text-red-600 cursor-pointer" />
+                onClick={handleDelete}
+                className="hover:text-red-600 cursor-pointer"
+              /> */}
+              {role === "admin" && (
+                <>
+                  <FiEdit2
+                    onClick={() => setShow(true)}
+                    className="hover:text-blue-600 cursor-pointer"
+                    role="button"
+                    tabIndex={0}
+                  />
+                  <FiTrash2
+                    onClick={handleDelete}
+                    className="hover:text-red-600 cursor-pointer"
+                  />
+                </>
+              )}
             </div>
           </div>
 

@@ -71,15 +71,45 @@ export const deleteUser = createAsyncThunk(
   async (userId: string, thunkAPI) => {
     try {
       const state = thunkAPI.getState() as { auth: { token: string } };
-      const token = state.auth.token;
+      const token = state.auth.data?.token;
 
-      await API.delete(`users/${userId}`, {
+      await axiosInstance.delete(`/api/users/${userId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
       return userId; // return ID so it can be removed from state
     } catch (error: any) {
       console.error("Delete user error:", error.response?.data || error);
+      return thunkAPI.rejectWithValue(error.response?.data || error.message);
+    }
+  }
+);
+
+interface UpdateUserRoleArgs {
+  userId: string;
+  role: string;
+}
+export const updateUserRole = createAsyncThunk(
+  "user/updateUserRole",
+  async ({ userId, role }: UpdateUserRoleArgs, thunkAPI) => {
+    try {
+      const state = thunkAPI.getState() as { auth: { token: string } };
+      const token = state.auth.data?.token;
+
+      const response = await axiosInstance.put(
+        `/api/users/${userId}`,
+        { role },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      return response.data; // return the updated user
+    } catch (error: any) {
+      console.error("Update user role error:", error.response?.data || error.message);
       return thunkAPI.rejectWithValue(error.response?.data || error.message);
     }
   }

@@ -7,7 +7,7 @@ import { fetchProjects } from "../../Redux/Slice/projectSlice.ts";
 import toast from "react-hot-toast";
 import type { AppDispatch } from "../../Redux/store.ts";
 import ProjectCard from "../../Component/Project/ProjectCard.tsx";
- import { useCallback } from "react";
+import { useCallback } from "react";
 
 // Define a UserData interface for user data structure
 interface UserData {
@@ -26,6 +26,7 @@ interface RootState {
 
 const Project: React.FC = () => {
   const [showForm, setShowForm] = useState(false);
+  const [searchProjectTerm, setSearchProjectTerm] = useState("");
   const dispatch = useDispatch<AppDispatch>();
   const userData = useSelector((state: RootState) => state?.auth?.data);
   const role = useSelector((state: RootState) => state?.auth?.role);
@@ -33,7 +34,8 @@ const Project: React.FC = () => {
     (state: RootState) => state?.project?.projects
   );
   console.log(allProject);
- 
+
+  
 
   const loadAllProject = useCallback(async () => {
     try {
@@ -69,7 +71,7 @@ const Project: React.FC = () => {
       <div className="min-h-screen bg-gray-50 text-gray-800 p-6">
         {/* Header */}
         <div className="flex justify-between items-center mb-6">
-          <div>
+          <div className="">
             <h1 className="text-2xl font-semibold">
               Welcome, <span className="text-blue-600">{userData?.name}</span>
             </h1>
@@ -112,10 +114,12 @@ const Project: React.FC = () => {
           <div className="flex justify-between items-center mb-4">
             <div>
               <h2 className="text-xl font-semibold">Project Overview</h2>
-              <p className="text-sm text-gray-500">1 project found</p>
+              <p className="text-sm text-gray-500">
+                {allProject.length} project found
+              </p>
             </div>
 
-            <div className="flex gap-2">
+            {/* <div className="flex gap-2">
               <div className="relative">
                 <input
                   type="text"
@@ -136,7 +140,7 @@ const Project: React.FC = () => {
                 <option>Date</option>
                 <option>Name</option>
               </select>
-            </div>
+            </div> */}
           </div>
 
           {/* Project Card */}
@@ -159,7 +163,7 @@ const Project: React.FC = () => {
           </div> */}
           {allProject &&
             Array.isArray(allProject) &&
-            allProject.map((el,idx) => <ProjectCard data={el} key={idx} />)}
+            allProject.map((el, idx) => <ProjectCard data={el} key={idx} />)}
         </div>
       </div>
     </Layout>

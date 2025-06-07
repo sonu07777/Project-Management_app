@@ -150,8 +150,9 @@ const Register = () => {
       const response = await dispatch(registerUser(formData));
       // await registerUser(formData);
       if (response?.payload?.success) {
-        toast.success("Registration successful! Please log in.");
+        toast.success("Registration successful! Please loge in.");
         // await loadAllTask();
+        navigate("/login");
       } else {
         toast.error("Failed to register");
       }
@@ -194,7 +195,7 @@ const Register = () => {
                 onChange={handleChange}
                 required
                 placeholder="John Doe"
-                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-600 focus:outline-none transition-all duration-300"
+                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-600 focus:outline-none transition-all duration-300 text-black"
               />
               <FiUser className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500" />
             </div>
@@ -216,7 +217,7 @@ const Register = () => {
                 onChange={handleChange}
                 required
                 placeholder="you@example.com"
-                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-600 focus:outline-none transition-all duration-300"
+                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-600 focus:outline-none transition-all duration-300  text-black"
               />
               <FiMail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500" />
             </div>
@@ -238,7 +239,7 @@ const Register = () => {
                 onChange={handleChange}
                 required
                 placeholder="••••••••"
-                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-600 focus:outline-none transition-all duration-300"
+                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-600 focus:outline-none transition-all duration-300  text-black"
               />
               <FiLock
                 className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray- Thunderstorm

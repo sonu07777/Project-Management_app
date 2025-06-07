@@ -102,9 +102,9 @@ const deleteUser = async (req, res) => {
         }
 
         await user.deleteOne();
-        res.json({ message: "User deleted successfully" });
+        res.status(200).json({success:true, message: "User deleted successfully" });
     } catch (error) {
-        res.status(500).json({ message: "Server error" });
+        res.status(500).json({ success:false,message: "Server error" });
     }
 };
 const logoutUser = async (req, res) => {
@@ -127,6 +127,7 @@ const logoutUser = async (req, res) => {
         });
     }
 };
+
 
 
 module.exports = { registerUser, loginUser, deleteUser, getAllUsers, updateUser,logoutUser };

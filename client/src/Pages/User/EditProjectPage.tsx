@@ -149,8 +149,8 @@ const EditProjectPage: React.FC <EditProjectPageProps> = ({state, setShow }) => 
 
   return (
     <div className="bg-white rounded-2xl shadow-xl w-full max-w-md overflow-hidden">
-      <div className="bg-gradient-to-r from-blue-500 to-blue-600 p-6 flex justify-between items-center">
-        <h2 className="text-xl font-bold text-white">Edit Project</h2>
+      <div className="bg-white p-6 flex justify-between items-center">
+        {/* <h2 className="text-xl font-bold text-white">Edit Project</h2>
         <button
           className={`px-4 py-2 flex items-center space-x-2 rounded text-white ${
             editData.isDelete
@@ -190,7 +190,7 @@ const EditProjectPage: React.FC <EditProjectPageProps> = ({state, setShow }) => 
               <span>Move to Bin</span>
             </>
           )}
-        </button>
+        </button> */}
       </div>
 
       <div className="p-6 space-y-4">
